@@ -1,6 +1,7 @@
 import * as PlayerActionTypes from '../actiontypes/player';
 
-const initialState = [
+//! Inistion state for the player reducer.
+const initialState = [   
     {
         name: 'Jim Hoskins',
         score: 31,
@@ -17,7 +18,7 @@ const initialState = [
 
 export default function Player(state=initialState, action) {
     switch (action.type) {
-        case PlayerActionTypes.ADD_PLAYER:
+        case PlayerActionTypes.ADD_PLAYER: //! creates new object action which adds to the store.
             return [
                 ...state,
                 {
@@ -26,15 +27,15 @@ export default function Player(state=initialState, action) {
                 }
             ];
 
-        case PlayerActionTypes.REMOVE_PLAYER:
-            return [
-                ...state.slice(0, action.index),
-                ...state.slice(action.index + 1)
+        case PlayerActionTypes.REMOVE_PLAYER:       //! Returns object at index 0 to index being removed.
+            return [                                //! Returns index of object removed + 1. The action is being
+                ...state.slice(0, action.index),    //! removed by only returning all objects EXCEPT for the chosen
+                ...state.slice(action.index + 1)    //! player!
             ];
         
         case PlayerActionTypes.UPDATE_PLAYER_SCORE:
-            return state.map((player, index) => {
-                if(index === action.index) {
+            return state.map((player, index) => {   //! Returns chosen player by INDEX then ...player = name plus
+                if(index === action.index) {        //! the updated score!
                     return {
                         ...player,
                         score: player.score + action.score
